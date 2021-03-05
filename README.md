@@ -1,6 +1,4 @@
 # Taskic - Productivity through simplicity
-
----
 Taskic is an app that enables you to keep focus on the important things.
 
 It's based on the Ivy Lee method and build with [React Native](https://reactnative.dev/).
