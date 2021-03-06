@@ -1,23 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import QuickStats from './components/QuickStats';
+import TaskList from './components/TaskList';
 
 export default function App() {
-  const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
-
-  if (!isLoadingComplete) {
-    return null;
-  } else {
     return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
+        <SafeAreaView style={styles.container}>
+            <QuickStats/>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Deine Aufgaben für heute</Text>
+            </View>
+            <TaskList/>
+        </SafeAreaView>
     );
-  }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    header: {
+        flex: 1
+    },
+    headerText: {
+        fontSize: 20
+    }
+});

@@ -11,4 +11,3 @@ Named by the man who created it, the [Ivy Lee](https://en.wikipedia.org/wiki/Ivy
 1. **Cleanup:** Celebrate finished tasks, move unfinished tasks to the list for the next day.
 1. **Secret sauce: Routine!** Repeat this process every working day.
 
-
