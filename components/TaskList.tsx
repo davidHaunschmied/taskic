@@ -25,16 +25,13 @@ export class TaskList extends React.Component<Props, State> {
     }
 
     render() {
-        if (this.props.tasks?.length < 1) {
-            return (
-                <View>
-                    <Text>No tasks planned yet.</Text>
-                </View>
-            );
-        }
         return (
             <View style={styles.container}>
                 <View style={{flex: this.props.tasks.length}}>
+                    {this.props.tasks.length < 1 &&
+                        <Text>No tasks added yet.</Text>
+
+                    }
                     {
                         // TODO: Code deduplication
                         this.props.isDayStarted &&
