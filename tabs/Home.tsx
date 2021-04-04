@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 export default function Home() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="TaskScreen" options={{title: 'Tastic - The Ivy Lee method'}} component={TaskScreen}/>
+            <Stack.Screen name="TaskScreen" options={{title: 'Taskic - The Ivy Lee method'}} component={TaskScreen}/>
             <Stack.Screen name="AddTask" options={{title: 'Add task'}} component={AddTaskScreen}/>
         </Stack.Navigator>
     );
