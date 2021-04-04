@@ -1,73 +1,86 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
-import TaskItem from './TaskItem';
+import {FlatList, GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Task} from '../model/task';
+import {TaskItem} from './TaskItem';
+import {MAX_TASKS} from '../services/task-service';
+import DraggableFlatList, {RenderItemParams} from 'react-native-draggable-flatlist';
 
-export default function TaskList() {
-    return (
-        <View style={styles.container}>
+interface Props {
+    tasks: Task[];
+    isDayStarted: boolean;
+    isDayFinished: boolean;
 
-            <View style={{width: 50, height: 30, backgroundColor: 'limegreen'}}/>
-            <View style={{width: 100, height: 30, backgroundColor: 'yellowgreen'}}/>
-            <View style={{width: 200, height: 30, backgroundColor: 'gold'}}/>
+    handleTaskStateToggled(id: string, e: GestureResponderEvent): void;
 
-            <FlatList
-                data={data} renderItem={item => <TaskItem item={item.item}/>}
-                keyExtractor={item => item.id}
-                ItemSeparatorComponent={() => <View style={{marginBottom: 5}}/>}/>
+    handleTaskMoved(tasks: Task[]): void;
+}
 
-            <View style={{width: 200, height: 30, backgroundColor: 'gold'}}/>
-            <View style={{width: 100, height: 30, backgroundColor: 'yellowgreen'}}/>
-            <View style={{width: 50, height: 30, backgroundColor: 'limegreen'}}/>
-        </View>
-    );
+interface State {
+}
+
+export class TaskList extends React.Component<Props, State> {
+
+    constructor(public props: Readonly<Props> | Props) {
+        super(props);
+    }
+
+    render() {
+        if (this.props.tasks?.length < 1) {
+            return (
+                <View>
+                    <Text>No tasks planned yet.</Text>
+                </View>
+            );
+        }
+        return (
+            <View style={styles.container}>
+                <View style={{flex: this.props.tasks.length}}>
+                    {
+                        // TODO: Code deduplication
+                        this.props.isDayStarted &&
+                        <FlatList data={this.props.tasks}
+                                  keyExtractor={item => item.id}
+                                  contentContainerStyle={{flexGrow: 1, justifyContent: 'space-around'}}
+                                  renderItem={item =>
+                                      <TaskItem task={item.item}
+                                                prio={item.index + 1}
+                                                isDayStarted={this.props.isDayStarted}
+                                                isDayFinished={this.props.isDayFinished}
+                                                handleTaskStateToggled={this.props.handleTaskStateToggled}/>}/>
+                    }
+                    {
+                        !this.props.isDayStarted &&
+                        <DraggableFlatList
+                            data={this.props.tasks}
+                            keyExtractor={item => item.id}
+                            contentContainerStyle={{flexGrow: 1, justifyContent: 'space-around'}}
+                            onDragEnd={params => this.props.handleTaskMoved(params.data)}
+                            renderItem={({item, index, drag, isActive}: RenderItemParams<Task>) => {
+                                return <TouchableOpacity onLongPress={drag}>
+                                    <TaskItem task={item} prio={(index ? index : 0) + 1}
+                                              isDayStarted={this.props.isDayStarted}
+                                              isDayFinished={this.props.isDayFinished}
+                                              handleTaskStateToggled={this.props.handleTaskStateToggled}/>
+                                </TouchableOpacity>
+                            }}/>
+                    }
+
+
+                </View>
+                <View style={{flex: MAX_TASKS - this.props.tasks.length}}/>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-    container:
-        {
-            flex: 10,
-            flexDirection: 'column',
-            justifyContent: 'space-around',
-            alignItems: 'center'
-        },
-});
-
-const data: Task[] = [
-    {
-        id: '1',
-        desc: 'Create a quick info bar',
-        prio: 1,
-        done: true
+    container: {
+        flex: 10,
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center'
     },
-    {
-        id: '2',
-        desc: 'Build a nice list for the tasks',
-        prio: 2,
-        done: false
-    },
-    {
-        id: '3',
-        desc: 'Go shopping',
-        prio: 3,
-        done: false
-    },
-    {
-        id: '4',
-        desc: 'Chill',
-        prio: 4,
-        done: false
-    },
-    {
-        id: '5',
-        desc: 'Go shopping again',
-        prio: 5,
-        done: false
-    },
-    {
-        id: '6',
-        desc: 'Celebrate the life',
-        prio: 6,
-        done: false
+    taskListContainer: {
+        flex: 12,
     }
-];
+});
