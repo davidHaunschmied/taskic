@@ -1,7 +1,9 @@
 {
   "expo": {
     "name": "Taskic",
+    "description": "Taskic is an app that enables you to keep focus on the important things.",
     "slug": "taskic",
+    "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/frog-with-bg.png",
@@ -9,7 +11,7 @@
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -19,12 +21,12 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "org.taskic",
+      "bundleIdentifier": "org.dhaunschmied.taskic",
       "buildNumber": "1",
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "android": {
-      "package": "org.taskic",
+      "package": "org.dhaunschmied.taskic",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/frog.png",

@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Ionicons} from '@expo/vector-icons';
 import {StyleSheet} from 'react-native';
 import Home from './tabs/Home';
-import Stats from './tabs/Stats';
+import Info from './tabs/Info';
 import Toast from 'react-native-fast-toast';
 
 const Tab = createBottomTabNavigator();
@@ -20,8 +20,8 @@ export default function App() {
                         let iconName: any;
                         // https://icons.expo.fyi/
                         switch (route.name) {
-                            case 'Stats':
-                                iconName = 'bar-chart-outline';
+                            case 'Info':
+                                iconName = 'information-circle-outline';
                                 break;
                             default:
                                 iconName = 'home-outline';
@@ -31,7 +31,7 @@ export default function App() {
                 })}
                 >
                     <Tab.Screen name={'Home'} component={Home}/>
-                    <Tab.Screen name={'Stats'} component={Stats}/>
+                    <Tab.Screen name={'Info'} component={Info}/>
                 </Tab.Navigator>
             </NavigationContainer>
             <Toast ref={(ref) => global['toast'] = ref}/>

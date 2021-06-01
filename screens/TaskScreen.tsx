@@ -5,9 +5,15 @@ import {Button} from 'react-native-elements';
 import {TaskList} from '../components/TaskList';
 import {Task} from '../model/task';
 import {
+    getFinishedDaysCount,
+    getFinishedProdDaysCount,
+    getFinishedTasksCount,
     getTasks,
     isDayFinished,
     isDayStarted,
+    setFinishedDaysCount,
+    setFinishedProdDaysCount,
+    setFinishedTasksCount,
     setIsDayFinished,
     setIsDayStarted,
     setTasks
@@ -89,7 +95,7 @@ export class TaskScreen extends React.Component<Props, State> {
                 }
                 return value;
             });
-            setTasks(updatedTasks).then(() => console.log("Updated tasks in database"));
+            void setTasks(updatedTasks).then();
 
             return {
                 tasks: updatedTasks
@@ -118,7 +124,16 @@ export class TaskScreen extends React.Component<Props, State> {
 
     finishDay(): void {
         this.setState((state, props) => {
+            const finishedTasks = this.state.tasks.filter(task => task.done).length;
+
             void setIsDayFinished(true).then();
+
+            getFinishedTasksCount().then(finishedTasksCount => void setFinishedTasksCount(finishedTasksCount + finishedTasks));
+            getFinishedDaysCount().then(value => void setFinishedDaysCount(value + 1));
+
+            if (finishedTasks > 0) {
+                getFinishedProdDaysCount().then(value => void setFinishedProdDaysCount(value + 1));
+            }
 
             return {
                 isDayFinished: true
@@ -149,19 +164,22 @@ export class TaskScreen extends React.Component<Props, State> {
         if (tasks?.length < 6) {
             stateText = 'Step 1/4: Plan the 6 most important tasks you want to get done tomorrow.'
             actionButton =
-                <Button title="Add task 📝" type='solid'
+                <Button title="Add task 📝" type='solid' buttonStyle={globalStyles.buttonStyle}
                         onPress={() => this.props.navigation.navigate('AddTask')}/>
         } else if (!this.state.isDayStarted) {
             stateText = 'Step 2/4: Finalize your prioritization.'
             actionButton =
-                <Button title="Start day 🚧" type='solid' onPress={this.startDay}/>
+                <Button title="Start day 🚧" type='solid' buttonStyle={globalStyles.buttonStyle}
+                        onPress={this.startDay}/>
         } else if (!this.state.isDayFinished) {
             stateText = 'Step 3/4: Let\'s start! Focus on the top task in your list before moving to the next one.'
             actionButton =
-                <Button title="Finish day 🍻" type='solid' onPress={this.finishDay}/>
+                <Button title="Finish day 🍻" type='solid' buttonStyle={globalStyles.buttonStyle}
+                        onPress={this.finishDay}/>
         } else {
             stateText = 'Step 4/4: Done for today! 🎉 Celebrate what you have accomplished before starting over.'
-            actionButton = <Button title="Repeat 🔁" type='solid' onPress={this.startOver}/>
+            actionButton = <Button title="Repeat 🔁" type='solid' buttonStyle={globalStyles.buttonStyle}
+                                   onPress={this.startOver}/>
         }
         return (
             <>
@@ -193,7 +211,7 @@ const styles = StyleSheet.create({
     actionButtonContainer: {
         flex: 1,
         paddingTop: 5,
-        marginTop: 5,
+        margin: 10,
         borderTopWidth: 2,
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,

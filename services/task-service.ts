@@ -4,6 +4,9 @@ import {Task} from '../model/task';
 const TASKS_KEY = '@tasks';
 const IS_DAY_STARTED_KEY = '@isDayStarted';
 const IS_DAY_FINISHED_KEY = '@isDayFinished';
+const FINISHED_TASKS_COUNT = '@finishedTasksCount';
+const FINISHED_DAYS_COUNT = '@finishedDaysCount';
+const FINISHED_PROD_DAYS_COUNT = '@finishedProdDaysCount';
 
 export const MAX_TASKS = 6;
 
@@ -52,7 +55,31 @@ export async function isDayFinished(): Promise<boolean> {
 }
 
 export async function setIsDayFinished(isDayFinished: boolean): Promise<void> {
-    return setItem(IS_DAY_FINISHED_KEY, isDayFinished);
+    await setItem(IS_DAY_FINISHED_KEY, isDayFinished);
+}
+
+export async function getFinishedTasksCount(): Promise<number> {
+    return getItem<number>(FINISHED_TASKS_COUNT, 0);
+}
+
+export async function setFinishedTasksCount(finishedTasksCount: number): Promise<void> {
+    await setItem(FINISHED_TASKS_COUNT, finishedTasksCount);
+}
+
+export async function getFinishedDaysCount(): Promise<number> {
+    return getItem<number>(FINISHED_DAYS_COUNT, 0);
+}
+
+export async function setFinishedDaysCount(finishedDaysCount: number): Promise<void> {
+    await setItem(FINISHED_DAYS_COUNT, finishedDaysCount);
+}
+
+export async function getFinishedProdDaysCount(): Promise<number> {
+    return getItem<number>(FINISHED_PROD_DAYS_COUNT, 0);
+}
+
+export async function setFinishedProdDaysCount(finishedProdDaysCount: number): Promise<void> {
+    await setItem(FINISHED_PROD_DAYS_COUNT, finishedProdDaysCount);
 }
 
 /* PRIVATE METHODS */

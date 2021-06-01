@@ -1,13 +1,13 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import StatsScreen from '../screens/StatsScreen';
+import {InfoScreen} from '../screens/InfoScreen';
 
 const Stack = createStackNavigator();
 
-export default function Stats() {
+export default function Info() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="StatsScreen" options={{title: 'Stats'}}  component={StatsScreen}/>
+            <Stack.Screen name="InfoScreen" options={{title: 'Stats and information'}} component={InfoScreen}/>
         </Stack.Navigator>
     );
 }

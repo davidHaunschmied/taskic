@@ -54,9 +54,9 @@ export class AddTaskScreen extends React.Component<Props, State> {
                     />
                 </View>
                 <View style={[styles.inputContainer, {marginTop: 20}]}>
-                    <Button title={'Save'} onPress={this.save}/>
+                    <Button title={'Save'} onPress={this.save} buttonStyle={globalStyles.buttonStyle}/>
                 </View>
-                <Text style={styles.tbdHint}>Please be aware that editing task descriptions is not possible yet!</Text>
+                <Text style={styles.tbdHint}>Added tasks can not be edited yet!</Text>
             </SafeAreaView>
         );
     }
