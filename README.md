@@ -22,3 +22,7 @@ Any data is stored in the local app storage directly on the device.
 #### Disclaimer
 I developed this app mainly to get started with React Native. While the correctness of the app is ensured, the maintainability
 is not optimal due to some duplicated code fragments and lack of React Native expertise.
+
+---
+#### Third party content
+Frog icon made by [Freepik](https://www.freepik.com) from [Flaticon](www.flaticon.com)
