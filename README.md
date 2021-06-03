@@ -25,4 +25,4 @@ is not optimal due to some duplicated code fragments and lack of React Native ex
 
 ---
 #### Third party content
-Frog icon made by [Freepik](https://www.freepik.com) from [Flaticon](www.flaticon.com)
+Frog icon made by [Freepik](https://www.freepik.com) from [Flaticon](https://www.flaticon.com)
